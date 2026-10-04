@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmed & Rania | رحلتنا معا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --burgundy: #581825;
+            --rose-gold: #c59b27;
+            --bg-color: #fcf8f5;
+            --text-color: #333;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            font-family: 'Cairo', sans-serif;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background: #ffffff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 20px;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+            padding-bottom: 30px;
+            margin: 15px;
+        }
+
+        /* Envelope Overlay */
+        .envelope-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--burgundy);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .envelope-wrapper.open {
+            transform: translateY(-100%);
+        }
+
+        .open-btn {
+            background: #fff;
+            color: var(--burgundy);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+        .open-btn:hover {
+            background: var(--rose-gold);
+            color: #fff;
+        }
+
+        /* Content Sections */
+        .header-title {
+            font-family: 'Alex Brush', cursive;
+            font-size: 3.5rem;
+            color: var(--burgundy);
+            margin: 25px 0 5px;
+        }
+
+        .names {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--burgundy);
+            margin-bottom: 10px;
+        }
+
+        .sub-title {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .photo-frame {
+            width: 190px;
+            height: 190px;
+            margin: 15px auto;
+            border-radius: 50%;
+            border: 4px solid var(--burgundy);
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .date-section {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--burgundy);
+            margin: 15px 0 5px;
+        }
+
+        /* Live Counter */
+        .counter-title {
+            font-size: 1rem;
+            color: #555;
+            margin-top: 15px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 10px;
+        }
+
+        .time-box {
+            background: var(--burgundy);
+            color: #fff;
+            padding: 10px 5px;
+            border-radius: 10px;
+            min-width: 65px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .time-box label {
+            font-size: 0.75rem;
+        }
+
+        /* Message Card */
+        .message-box {
+            background: #fdf8f5;
+            border-right: 4px solid var(--burgundy);
+            margin: 20px 25px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: #444;
+            line-height: 1.6;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- غلاف الظرف -->
+        <div class="envelope-wrapper" id="envelope">
+            <h1 style="font-family: 'Alex Brush', cursive; font-size: 3.5rem; margin: 0;">Ahmed & Rania</h1>
+            <p style="margin-top: 10px; font-size: 1.1rem;">رسالة خاصة لكِ ❤️</p>
+            <button class="open-btn" onclick="openEnvelope()">افتحي من هنا ✨</button>
+        </div>
+
+        <!-- المحتوى الداخلي -->
+        <h1 class="header-title">Our Love Story</h1>
+        <div class="names">Ahmed & Rania</div>
+        <div class="sub-title">بداية حكايتنا أجمل التواريخ</div>
+        
+        <!-- صورة العروسين/الحبيبين -->
+        <div class="photo-frame">
+            <img src="your-image.jpg" alt="Ahmed & Rania">
+        </div>
+
+        <div class="date-section">تاريخ تعارفنا: 2 / 9 / 2026</div>
+
+        <div class="counter-title">الوقت الذي قضيناه معاً حتى الآن:</div>
+
+        <!-- العداد الحي المباشر -->
+        <div class="countdown">
+            <div class="time-box"><span id="days">0</span><label>أيام</label></div>
+            <div class="time-box"><span id="hours">0</span><label>ساعات</label></div>
+            <div class="time-box"><span id="minutes">0</span><labelأهلاً بك يا أحمد! ألف مبروك لك ولـ رانيا، وربنا يديم المحبة بينكم.
+
+لكي يعمل العداد تلقائياً ويستمر في العد زافعاً عدد الأيام كلما جاءت الساعة 12 منتصف الليل (حتى بعد إغلاق الموقع وإعادة فتحه)، المبدأ الأساسي يعتمد على **حساب الفارق بين تاريخ اليوم وتاريخ التعارف الثابت (2/9/2026)** بناءً على التوقيت الحالي لجهاز المستخدم.
+
+بما أن تاريخ تعارفكما هو **2 سبتمبر 2026**، فإن العداد يحسب الوقت بالظبط من ذلك التاريخ تلقائياً.
+
+---
+
+### كود الموقع المتكامل (HTML + CSS + JavaScript)
+
+قم بنسخ هذا الكود وحفظه في ملف باسم `index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmed & Rania</title>
+    <link href="[https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cairo:wght@400;700&display=swap](https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cairo:wght@400;700&display=swap)" rel="stylesheet">
+    <style>
+        :root {
+            --burgundy: #581825;
+            --rose-gold: #c59b27;
+            --bg-color: #fcf8f5;
+            --text-color: #333;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            font-family: 'Cairo', sans-serif;
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 420px;
+            background: #ffffff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 20px;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+            padding: 20px 15px 30px;
+            box-sizing: border-box;
+        }
+
+        /* غلاف الظرف */
+        .envelope-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--burgundy);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            transition: transform 0.8s ease-in-out;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .envelope-wrapper.open {
+            transform: translateY(-100%);
+        }
+
+        .open-btn {
+            background: #fff;
+            color: var(--burgundy);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+        .open-btn:hover {
+            background: var(--rose-gold);
+            color: #fff;
+        }
+
+        /* العناوين والأسماء */
+        .header-title {
+            font-family: 'Alex Brush', cursive;
+            font-size: 3rem;
+            color: var(--burgundy);
+            margin: 10px 0 5px;
+        }
+
+        .names {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--burgundy);
+            margin-bottom: 10px;
+        }
+
+        .sub-text {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        /* العداد التنازلي / التزايدي */
+        .countdown-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--burgundy);
+            margin-top: 20px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0 25px;
+        }
+
+        .time-box {
+            background: var(--burgundy);
+            color: #fff;
+            padding: 10px 5px;
+            border-radius: 10px;
+            min-width: 65px;
+            box-shadow: 0 4px 8px rgba(88, 24, 37, 0.2);
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 1.4rem;
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        .time-box label {
+            font-size: 0.75rem;
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* الرسالة الرومانسية */
+        .message-card {
+            background: #faf2f3;
+            border-right: 4px solid var(--burgundy);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: right;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #444;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- غلاف الظرف التفاعلي -->
+        <div class="envelope-wrapper" id="envelope">
+            <h1 style="font-family: 'Alex Brush', cursive; font-size: 3.5rem; margin: 0;">Ahmed & Rania</h1>
+            <p style="margin-top: 10px; font-size: 1.1rem;">رسالة خاصة لكِ ❤️</p>
+            <button class="open-btn" onclick="openEnvelope()">افتحي الدعوة من هنا ✨</button>
+        </div>
+
+        <!-- المحتوى الداخلي -->
+        <h1 class="header-title">Together Forever</h1>
+        <div class="names">Ahmed & Rania</div>
+        <div class="sub-text">تاريخ تعارفنا: 2 سبتمبر 2026</div>
+
+        <div class="message-card">
+            كل يوم يمر معك هو بداية لقصة أجمل. مر على وجودك في حياتي هذا الوقت وما زال العد مستمراً... ❤️
+        </div>
+
+        <!-- العداد التزايدي المستمر -->
+        <div class="countdown-title">الوقت الذي قضيناه معاً:</div>
+        <div class="countdown">
+            <div class="time-box"><span id="days">0</span><label>أيام</label></div>
+            <div class="time-box"><span id="hours">00</span><label>ساعات</label></div>
+            <div class="time-box"><span id="minutes">00</span><label>دقائق</label></div>
+            <div class="time-box"><span id="seconds">00</span><label>ثواني</label></div>
+        </div>
+    </div>
+
+    <script>
+        function openEnvelope() {
+            document.getElementById('envelope').classList.add('open');
+        }
+
+        // تاريخ التعارف الثابت: 2 سبتمبر 2026 الساعة 00:00:00
+        const startDate = new Date("September 2, 2026 00:00:00").getTime();
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            
+            // حساب الوقت المنقضي بالمللي ثانية
+            const diff = now - startDate;
+
+            if (diff > 0) {
+                // حساب الأيام، الساعات، الدقائق، والثواني
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                // عرض الأرقام مع إضافة 0 على اليسار إذا كانت أقل من 10
+                document.getElementById("days").innerText = days;
+                document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+                document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+            }
+        }
+
+        // تشغيل العداد فوراً وتحديثه كل ثانية بدون توقف
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
