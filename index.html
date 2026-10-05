@@ -1,430 +1,415 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahmed & Rania | رحلتنا معا</title>
-    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --burgundy: #581825;
-            --rose-gold: #c59b27;
-            --bg-color: #fcf8f5;
-            --text-color: #333;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>طلب موعد</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
 
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            font-family: 'Cairo', sans-serif;
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+    }
 
-        .container {
-            width: 100%;
-            max-width: 450px;
-            background: #ffffff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            border-radius: 20px;
-            overflow: hidden;
-            text-align: center;
-            position: relative;
-            padding-bottom: 30px;
-            margin: 15px;
-        }
+    body {
+      background: radial-gradient(circle at center, #2e1a38, #130a19);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-        /* Envelope Overlay */
-        .envelope-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--burgundy);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            transition: transform 0.8s ease-in-out;
-        }
+    /* خلفية نجوم بسيطة */
+    body::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png');
+      opacity: 0.3;
+      pointer-events: none;
+    }
 
-        .envelope-wrapper.open {
-            transform: translateY(-100%);
-        }
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 215, 0, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 25px 20px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      position: relative;
+      z-index: 10;
+    }
 
-        .open-btn {
-            background: #fff;
-            color: var(--burgundy);
-            border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            margin-top: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: 0.3s;
-        }
+    .sub-title {
+      font-size: 0.85rem;
+      color: #cca3bc;
+      margin-bottom: 8px;
+    }
 
-        .open-btn:hover {
-            background: var(--rose-gold);
-            color: #fff;
-        }
+    .main-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 8px;
+    }
 
-        /* Content Sections */
-        .header-title {
-            font-family: 'Alex Brush', cursive;
-            font-size: 3.5rem;
-            color: var(--burgundy);
-            margin: 25px 0 5px;
-        }
+    .desc {
+      font-size: 0.85rem;
+      color: #a894ad;
+      margin-bottom: 25px;
+    }
 
-        .names {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--burgundy);
-            margin-bottom: 10px;
-        }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 15px;
+    }
 
-        .sub-title {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 15px;
-        }
+    .btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
 
-        .photo-frame {
-            width: 190px;
-            height: 190px;
-            margin: 15px auto;
-            border-radius: 50%;
-            border: 4px solid var(--burgundy);
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-        }
+    .btn:active {
+      transform: scale(0.96);
+    }
 
-        .photo-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+    .btn-primary {
+      background: linear-gradient(135deg, #f3d08a, #e6b251);
+      color: #1a0f23;
+      border: none;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(243, 208, 138, 0.3);
+    }
 
-        .date-section {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: var(--burgundy);
-            margin: 15px 0 5px;
-        }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
 
-        /* Live Counter */
-        .counter-title {
-            font-size: 1rem;
-            color: #555;
-            margin-top: 15px;
-        }
+    .grid-1 {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 15px 10px;
-        }
+    .selected {
+      background: linear-gradient(135deg, #f3d08a, #e6b251) !important;
+      color: #1a0f23 !important;
+      font-weight: 700;
+      border: none !important;
+    }
 
-        .time-box {
-            background: var(--burgundy);
-            color: #fff;
-            padding: 10px 5px;
-            border-radius: 10px;
-            min-width: 65px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
+    .disabled-btn {
+      opacity: 0.3;
+      text-decoration: line-through;
+      pointer-events: none;
+    }
 
-        .time-box span {
-            display: block;
-            font-size: 1.4rem;
-            font-weight: bold;
-        }
+    .no-msg {
+      margin-top: 20px;
+      font-size: 0.85rem;
+      color: #e8a0bf;
+    }
 
-        .time-box label {
-            font-size: 0.75rem;
-        }
+    /* Modal / Popup */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding-bottom: 30px;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
 
-        /* Message Card */
-        .message-box {
-            background: #fdf8f5;
-            border-right: 4px solid var(--burgundy);
-            margin: 20px 25px;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            color: #444;
-            line-height: 1.6;
-            text-align: right;
-        }
-    </style>
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      background: #23122c;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 20px;
+      padding: 20px;
+      width: 90%;
+      max-width: 360px;
+      text-align: center;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active .modal {
+      transform: translateY(0);
+    }
+
+    .modal-icon {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+
+    .modal-text {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 15px;
+      color: #f1e4f5;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.9rem;
+    }
+
+    .summary-label { color: #a894ad; }
+    .summary-val { font-weight: 700; color: #fff; }
+
+    .step { display: none; }
+    .step.active { display: block; }
+  </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- غلاف الظرف -->
-        <div class="envelope-wrapper" id="envelope">
-            <h1 style="font-family: 'Alex Brush', cursive; font-size: 3.5rem; margin: 0;">Ahmed & Rania</h1>
-            <p style="margin-top: 10px; font-size: 1.1rem;">رسالة خاصة لكِ ❤️</p>
-            <button class="open-btn" onclick="openEnvelope()">افتحي من هنا ✨</button>
-        </div>
-
-        <!-- المحتوى الداخلي -->
-        <h1 class="header-title">Our Love Story</h1>
-        <div class="names">Ahmed & Rania</div>
-        <div class="sub-title">بداية حكايتنا أجمل التواريخ</div>
-        
-        <!-- صورة العروسين/الحبيبين -->
-        <div class="photo-frame">
-            <img src="your-image.jpg" alt="Ahmed & Rania">
-        </div>
-
-        <div class="date-section">تاريخ تعارفنا: 2 / 9 / 2026</div>
-
-        <div class="counter-title">الوقت الذي قضيناه معاً حتى الآن:</div>
-
-        <!-- العداد الحي المباشر -->
-        <div class="countdown">
-            <div class="time-box"><span id="days">0</span><label>أيام</label></div>
-            <div class="time-box"><span id="hours">0</span><label>ساعات</label></div>
-            <div class="time-box"><span id="minutes">0</span><labelأهلاً بك يا أحمد! ألف مبروك لك ولـ رانيا، وربنا يديم المحبة بينكم.
-
-لكي يعمل العداد تلقائياً ويستمر في العد زافعاً عدد الأيام كلما جاءت الساعة 12 منتصف الليل (حتى بعد إغلاق الموقع وإعادة فتحه)، المبدأ الأساسي يعتمد على **حساب الفارق بين تاريخ اليوم وتاريخ التعارف الثابت (2/9/2026)** بناءً على التوقيت الحالي لجهاز المستخدم.
-
-بما أن تاريخ تعارفكما هو **2 سبتمبر 2026**، فإن العداد يحسب الوقت بالظبط من ذلك التاريخ تلقائياً.
-
----
-
-### كود الموقع المتكامل (HTML + CSS + JavaScript)
-
-قم بنسخ هذا الكود وحفظه في ملف باسم `index.html`:
-
-```html
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ahmed & Rania</title>
-    <link href="[https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cairo:wght@400;700&display=swap](https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cairo:wght@400;700&display=swap)" rel="stylesheet">
-    <style>
-        :root {
-            --burgundy: #581825;
-            --rose-gold: #c59b27;
-            --bg-color: #fcf8f5;
-            --text-color: #333;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            font-family: 'Cairo', sans-serif;
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 420px;
-            background: #ffffff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            border-radius: 20px;
-            overflow: hidden;
-            text-align: center;
-            position: relative;
-            padding: 20px 15px 30px;
-            box-sizing: border-box;
-        }
-
-        /* غلاف الظرف */
-        .envelope-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--burgundy);
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            transition: transform 0.8s ease-in-out;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .envelope-wrapper.open {
-            transform: translateY(-100%);
-        }
-
-        .open-btn {
-            background: #fff;
-            color: var(--burgundy);
-            border: none;
-            padding: 12px 28px;
-            border-radius: 25px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 25px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: 0.3s;
-        }
-
-        .open-btn:hover {
-            background: var(--rose-gold);
-            color: #fff;
-        }
-
-        /* العناوين والأسماء */
-        .header-title {
-            font-family: 'Alex Brush', cursive;
-            font-size: 3rem;
-            color: var(--burgundy);
-            margin: 10px 0 5px;
-        }
-
-        .names {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--burgundy);
-            margin-bottom: 10px;
-        }
-
-        .sub-text {
-            font-size: 1rem;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        /* العداد التنازلي / التزايدي */
-        .countdown-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--burgundy);
-            margin-top: 20px;
-        }
-
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 15px 0 25px;
-        }
-
-        .time-box {
-            background: var(--burgundy);
-            color: #fff;
-            padding: 10px 5px;
-            border-radius: 10px;
-            min-width: 65px;
-            box-shadow: 0 4px 8px rgba(88, 24, 37, 0.2);
-        }
-
-        .time-box span {
-            display: block;
-            font-size: 1.4rem;
-            font-weight: bold;
-            font-family: monospace;
-        }
-
-        .time-box label {
-            font-size: 0.75rem;
-            display: block;
-            margin-top: 2px;
-        }
-
-        /* الرسالة الرومانسية */
-        .message-card {
-            background: #faf2f3;
-            border-right: 4px solid var(--burgundy);
-            padding: 15px;
-            border-radius: 8px;
-            text-align: right;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #444;
-            margin: 10px 0;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <!-- غلاف الظرف التفاعلي -->
-        <div class="envelope-wrapper" id="envelope">
-            <h1 style="font-family: 'Alex Brush', cursive; font-size: 3.5rem; margin: 0;">Ahmed & Rania</h1>
-            <p style="margin-top: 10px; font-size: 1.1rem;">رسالة خاصة لكِ ❤️</p>
-            <button class="open-btn" onclick="openEnvelope()">افتحي الدعوة من هنا ✨</button>
-        </div>
-
-        <!-- المحتوى الداخلي -->
-        <h1 class="header-title">Together Forever</h1>
-        <div class="names">Ahmed & Rania</div>
-        <div class="sub-text">تاريخ تعارفنا: 2 سبتمبر 2026</div>
-
-        <div class="message-card">
-            كل يوم يمر معك هو بداية لقصة أجمل. مر على وجودك في حياتي هذا الوقت وما زال العد مستمراً... ❤️
-        </div>
-
-        <!-- العداد التزايدي المستمر -->
-        <div class="countdown-title">الوقت الذي قضيناه معاً:</div>
-        <div class="countdown">
-            <div class="time-box"><span id="days">0</span><label>أيام</label></div>
-            <div class="time-box"><span id="hours">00</span><label>ساعات</label></div>
-            <div class="time-box"><span id="minutes">00</span><label>دقائق</label></div>
-            <div class="time-box"><span id="seconds">00</span><label>ثواني</label></div>
-        </div>
+  <div class="card">
+    
+    <!-- Step 1: السؤال الأول -->
+    <div id="step-1" class="step active">
+      <div class="sub-title">سؤال واحد بس</div>
+      <div class="main-title">بدك تطلعي طلعة؟</div>
+      <div class="desc">فكري منيح.. بس مش كثير 😜</div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="goToStep(2)">اه ❤️</button>
+        <button class="btn" onclick="handleNoClick()">لا</button>
+      </div>
+      <div id="no-msg" class="no-msg"></div>
     </div>
 
-    <script>
-        function openEnvelope() {
-            document.getElementById('envelope').classList.add('open');
-        }
+    <!-- Step 2: الوقت -->
+    <div id="step-2" class="step">
+      <div class="main-title">طيب... اختاري الوقت اللي يناسبنا</div>
+      <div class="desc">اللي بريحك.. أنا فاضي طول اليوم لك 🤍</div>
+      <div class="grid-1">
+        <button class="btn" onclick="selectTime('5:00 العصر')">5:00 العصر</button>
+        <button class="btn" onclick="selectTime('6:30 المغرب')">6:30 المغرب</button>
+        <button class="btn" onclick="selectTime('8:00 بالليل')">8:00 بالليل</button>
+        <button class="btn" onclick="selectTime('9:30 بالليل')">9:30 بالليل</button>
+      </div>
+    </div>
 
-        // تاريخ التعارف الثابت: 2 سبتمبر 2026 الساعة 00:00:00
-        const startDate = new Date("September 2, 2026 00:00:00").getTime();
+    <!-- Step 3: المكان -->
+    <div id="step-3" class="step">
+      <div class="main-title">وين حابة نروح؟</div>
+      <div class="desc">خيارات محترمة كلها... تقريباً 😅</div>
+      <div class="grid-2">
+        <button id="btn-gaza" class="btn" onclick="showPopup('😒', 'غزة؟ بعييييدة 🧐 بوصل بكون تعبان مش جاهز نتأشى.', 'btn-gaza')">غزة</button>
+        <button id="btn-deir" class="btn" onclick="showPopup('😴', 'الدير؟ بيناموا بدري هناك 😴 بوصل بلاقي الكل مسكر وراح ينام.', 'btn-deir')">الدير</button>
+        <button id="btn-egypt" class="btn" onclick="showPopup('💸', 'مصر؟ حبيبي الميزانية 250 شيكل... مش 50 ألف دولار 💸', 'btn-egypt')">مصر</button>
+        <button id="btn-khan" class="btn" onclick="selectLocation('خان يونس')">خان يونس</button>
+      </div>
+    </div>
 
-        function updateTimer() {
-            const now = new Date().getTime();
-            
-            // حساب الوقت المنقضي بالمللي ثانية
-            const diff = now - startDate;
+    <!-- Step 3.5: الساند بيتش (تحديد المكان النهائي) -->
+    <div id="step-3-5" class="step">
+      <div class="sub-title">ايوه... هيك!</div>
+      <div class="main-title" style="color: #f3d08a; font-size: 1.8rem;">الساند بيتش</div>
+      <div class="sub-title">خان يونس</div>
+      <div class="desc" style="margin-top: 15px;">وعشان إحنا ديمقراطيين، اخترنا المكان عنك عشان نريحك 😃</div>
+      <div class="btn-group" style="flex-direction: column;">
+        <button class="btn btn-primary" onclick="goToStep(4)">تمام، كملي</button>
+        <button class="btn" onclick="alert('منتجع ألايت بيتش - خان يونس')">📍 وين هو</button>
+      </div>
+    </div>
 
-            if (diff > 0) {
-                // حساب الأيام، الساعات، الدقائق، والثواني
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    <!-- Step 4: الأكل -->
+    <div id="step-4" class="step">
+      <div class="main-title">وشو حابة تأكلي؟</div>
+      <div class="desc">اختاري براحتك... بس في أجوبة صح وأجوبة أصح</div>
+      <div class="grid-2">
+        <button id="food-shawarma" class="btn" onclick="toggleFood('شاورما', 'food-shawarma')">شاورما 🌯</button>
+        <button id="food-bbq" class="btn" onclick="toggleFood('مشاوي', 'food-bbq')">مشاوي 🍢</button>
+        <button id="food-fish" class="btn" onclick="showPopup('🤨', 'هو أنتِ بتحبي السمك؟ 🤨 آخر مرة أكلتي منه أكلتي البطاطا بس.', 'food-fish')">سمك / بحري 🐟</button>
+        <button id="food-burger" class="btn" onclick="showPopup('🤨', 'برجر؟ يعني نقعد بالبيت ونطلب دليفري ونحضر فيلم... بس مش بعد زواجنا 😃', 'food-burger')">برجر 🍔</button>
+        <button id="food-pizza" class="btn" onclick="showPopup('🤨', 'بيتزا؟ وأنتِ أصلاً ما بتحبي الجبنة 🧀😂 بدك تقعدي تقشريها عن الوجه زي كل مرة؟', 'food-pizza')">بيتزا 🍕</button>
+        <button id="food-maqluba" class="btn" onclick="showPopup('🤨', 'المقلوبة؟ تمام... أنا بجيب المكونات وأنتِ بتطبخيها، ومش لازم نطلع من البيت أصلاً 😒 عيد زواج موفق!', 'food-maqluba')">مقلوبة 🍲</button>
+        <button id="food-falafel" class="btn" onclick="showPopup('🤨', 'فطور الساعة 8 بالليل؟ أنتِ كويسة؟ 😂', 'food-falafel')">فلافل وحمص 🧆</button>
+        <button id="food-sweet" class="btn" onclick="showPopup('🤨', 'الحلو بعدين، مش بدله 🤍 خلينا نجيب الأساس الأول.', 'food-sweet')">حلو وكريب 🍰</button>
+      </div>
+      <div class="btn-group" style="margin-top: 20px;">
+        <button class="btn btn-primary" onclick="finishFoodStep()">خلصت، كملي 👈</button>
+      </div>
+    </div>
 
-                // عرض الأرقام مع إضافة 0 على اليسار إذا كانت أقل من 10
-                document.getElementById("days").innerText = days;
-                document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-                document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
-                document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
-            }
-        }
+    <!-- Step 5: النتيجة النهائية -->
+    <div id="step-5" class="step">
+      <div class="sub-title">تم الاتفاق</div>
+      <div class="main-title">فيش أحسن من اختياراتك</div>
+      <div class="desc">وأنا كمان موافق 😜</div>
 
-        // تشغيل العداد فوراً وتحديثه كل ثانية بدون توقف
-        updateTimer();
-        setInterval(updateTimer, 1000);
-    </script>
+      <div style="margin: 20px 0;">
+        <div class="summary-item"><span class="summary-label">الطلعة</span><span class="summary-val">أكيد ❤️</span></div>
+        <div class="summary-item"><span class="summary-label">اليوم</span><span class="summary-val" id="sum-day">الخميس، 20 آب</span></div>
+        <div class="summary-item"><span class="summary-label">الوقت</span><span class="summary-val" id="sum-time">9:30 بالليل</span></div>
+        <div class="summary-item"><span class="summary-label">المكان</span><span class="summary-val">الساند بيتش - خان يونس</span></div>
+        <div class="summary-item"><span class="summary-label">الأكل</span><span class="summary-val" id="sum-food">شاورما 🌯 + مشاوي 🍢</span></div>
+      </div>
+
+      <div class="sub-title" style="margin-top: 15px;">✨ اليوم هو اليوم ✨</div>
+      <div class="desc" style="font-size: 0.8rem;">تمام، أنا بجهز حالي... وأنتِ جهزي حالك 🤍</div>
+
+      <button class="btn btn-primary" onclick="triggerConfetti()">خلص اتفقنا 🤝</button>
+    </div>
+
+  </div>
+
+  <!-- Popup / Modal -->
+  <div id="modal-overlay" class="modal-overlay">
+    <div class="modal">
+      <div id="modal-icon" class="modal-icon">😎</div>
+      <div id="modal-text" class="modal-text">نص الرسالة هنا</div>
+      <button class="btn btn-primary" onclick="closePopup()">طيب طيب، بختار غيره</button>
+    </div>
+  </div>
+
+  <script>
+    let selectedTimeVal = '';
+    let selectedFoods = [];
+    let noClickCount = 0;
+    let pendingStepAfterModal = null;
+    let currentDisabledBtnId = null;
+
+    const noMessages = [
+      "طب تأكدي... دومي كمان مرة",
+      "لسه بتحاولي؟ احترمت الإصرار 😂",
+      "لا يا ستي، هاد الزر مبرمج ضدك",
+      "خلص تعبتيني... دومي «اه»",
+      "شفتي؟ ما في غير «اه» 🤍"
+    ];
+
+    function goToStep(stepNum) {
+      document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+      document.getElementById(`step-${stepNum}`).classList.add('active');
+      if(stepNum === 5) {
+        triggerConfetti();
+      }
+    }
+
+    function handleNoClick() {
+      const msgBox = document.getElementById('no-msg');
+      if (noClickCount < noMessages.length) {
+        msgBox.innerText = noMessages[noClickCount];
+        noClickCount++;
+      } else {
+        msgBox.innerText = noMessages[noMessages.length - 1];
+      }
+    }
+
+    function selectTime(timeStr) {
+      selectedTimeVal = timeStr;
+      document.getElementById('sum-time').innerText = timeStr;
+      
+      // إظهار تنبيه الإذن
+      showCustomModal('😎', 'تمام ✅ بس ملاحظة صغيرة: الإذن من شغل عليك... أنا طلبت من زمان 😎', 'تمام، بطلب الإذن 🙋‍♂️', () => {
+        goToStep(3);
+      });
+    }
+
+    function selectLocation(loc) {
+      triggerConfetti();
+      goToStep('3-5');
+    }
+
+    function toggleFood(foodName, btnId) {
+      const btn = document.getElementById(btnId);
+      if (selectedFoods.includes(foodName)) {
+        selectedFoods = selectedFoods.filter(f => f !== foodName);
+        btn.classList.remove('selected');
+      } else {
+        selectedFoods.push(foodName);
+        btn.classList.add('selected');
+      }
+    }
+
+    function finishFoodStep() {
+      if (selectedFoods.length === 0) {
+        // افتراضي لو ما اختارت
+        selectedFoods = ['شاورما 🌯', 'مشاوي 🍢'];
+      }
+      document.getElementById('sum-food').innerText = selectedFoods.join(' + ');
+      goToStep(5);
+    }
+
+    function showPopup(icon, text, btnId) {
+      document.getElementById('modal-icon').innerText = icon;
+      document.getElementById('modal-text').innerText = text;
+      currentDisabledBtnId = btnId;
+      
+      const modalBtn = document.querySelector('#modal-overlay .btn');
+      modalBtn.innerText = 'طيب طيب، بختار غيره';
+      modalBtn.onclick = closePopup;
+
+      document.getElementById('modal-overlay').classList.add('active');
+    }
+
+    function showCustomModal(icon, text, btnText, callback) {
+      document.getElementById('modal-icon').innerText = icon;
+      document.getElementById('modal-text').innerText = text;
+      
+      const modalBtn = document.querySelector('#modal-overlay .btn');
+      modalBtn.innerText = btnText;
+      modalBtn.onclick = () => {
+        closePopup();
+        if(callback) callback();
+      };
+
+      document.getElementById('modal-overlay').classList.add('active');
+    }
+
+    function closePopup() {
+      document.getElementById('modal-overlay').classList.remove('active');
+      if (currentDisabledBtnId) {
+        const b = document.getElementById(currentDisabledBtnId);
+        if (b) b.classList.add('disabled-btn');
+        currentDisabledBtnId = null;
+      }
+    }
+
+    function triggerConfetti() {
+      confetti({
+        particleCount: 80,
+        spread: 60,
+        origin: { y: 0.6 }
+      });
+    }
+  </script>
 </body>
 </html>
